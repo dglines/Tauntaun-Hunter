@@ -63,6 +63,7 @@ GameEngine.prototype.startInput = function () {
 
     this.ctx.canvas.addEventListener("keydown", function (e) {
         if (String.fromCharCode(e.which) === ' ') that.space = true;
+        if (String.fromCharCode(e.which) === 'F') that.fKey = true;
 //        console.log(e);
         e.preventDefault();
     }, false);
@@ -107,6 +108,7 @@ GameEngine.prototype.loop = function () {
     this.update();
     this.draw();
     this.space = null;
+    this.fKey = null;
 }
 
 function Entity(game, x, y, canKill) {

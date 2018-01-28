@@ -176,9 +176,14 @@ function Batman(game) { // batman must create the baterang
         new Animation(AM.getAsset("./img/BF_Batman.png"), 0, 480, 57.53, 100, 7, 0.15, 7, true, false, 2.5);
     this.throwAnimation =
         new Animation(AM.getAsset("./img/BF_Batman.png"), 960, 1476, 75, 90, 3, 0.075, 3, false, false, 2.5);
+    this.jumpAnimation =
+        new Animation(AM.getAsset("./img/BF_Batman.png"), 0, 600, 65,100, 8, 0.075, 8, false, false, 2.5);
+
     this.throwSound = new Audio("throw_sound.wav");
     this.speed = 200;
+    this.jumping = false;
     this.throwing = false;
+    this.ground = 360;
     this.ctx = game.ctx;
     Entity.call(this, game, 0, 360, false);
 }
@@ -188,9 +193,30 @@ Batman.prototype.constructor = Batman;
 
 Batman.prototype.update = function() {
     if (this.game.space) {
+        this.jumping = true;
+    } else if (this.game.fKey) {
         this.throwing = true;
     }
-    if (this.throwing) {
+
+// ***** Jumping *****
+    if (this.jumping) {
+        this.speed = 200;
+        if (this.jumpAnimation.isDone()) {
+            this.jumpAnimation.elapsedTime = 0;
+            this.jumping = false;
+        }
+        var jumpDistance = this.jumpAnimation.elapsedTime / this.jumpAnimation.totalTime;
+        var totalHeight = 200;
+
+        if (jumpDistance > 0.5) {
+            jumpDistance = 1-jumpDistance;
+        }
+        var height = totalHeight * (-4 * (jumpDistance * jumpDistance - jumpDistance));
+        this.y = this.ground - height;
+    }
+
+// ***** Throwing *****
+     else if (this.throwing) {
         this.throwSound.play();
         if (this.throwAnimation.elapsedTime + this.game.clockTick >= this.throwAnimation.totalTime) {
             this.game.addEntity(new Baterang(this.game, AM.getAsset("./img/BF_Batman.png")));
@@ -201,11 +227,11 @@ Batman.prototype.update = function() {
         } else {
             this.speed = 0;
         }
-    } else {
+    }
         this.x += this.game.clockTick * this.speed;
         batX = this.x;
         batY = this.y;
-    }
+    
     if (this.x > 1700) {  // run off right side and return to lefts
         this.x = -230;
     }
@@ -214,8 +240,9 @@ Batman.prototype.update = function() {
 
 
 Batman.prototype.draw = function() {  // only put draw stuff in here
-
-    if (this.throwing) {
+    if (this.jumping) {
+        this.jumpAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
+    } else if (this.throwing) {
         this.throwAnimation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
     } else {
         this.Animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y);
