@@ -74,9 +74,9 @@ Background.prototype.update = function () {
 
 var deathSound = new Audio("./tauntaunSound.m4a");
 function Tauntaun(game){
-    this.runAnimation = new Animation(AM.getAsset("./img/TauntaunL.png"), 0, 256, 100, 85.6, 6, 0.15, 6, true, true, 3);
-    this.lookAnimation = new Animation(AM.getAsset("./img/TauntaunL.png"), 0, 0, 95.5, 85, 8, 0.15, 8, false, true, 3);
-    this.deathAnimation = new Animation(AM.getAsset("./img/TauntaunL.png"), 659, 342.4, 100, 85, 2, 0.3, 2, false, true, 3);
+    this.runAnimation = new Animation(AM.getAsset("./img/TauntaunL.png"), 0, 256, 100, 85.6, 6, 0.15, 6, true, true, 2.5);
+    this.lookAnimation = new Animation(AM.getAsset("./img/TauntaunL.png"), 0, 0, 95.5, 85, 8, 0.15, 8, false, true, 2.5);
+    this.deathAnimation = new Animation(AM.getAsset("./img/TauntaunL.png"), 659, 342.4, 100, 85, 2, 0.3, 2, false, true, 2.5);
     this.speed = -400;
     this.x = 1800;
     this.y = 380;
@@ -173,9 +173,9 @@ Tauntaun.prototype.draw = function() {
 
 function Batman(game) { // batman must create the baterang
     this.Animation =
-        new Animation(AM.getAsset("./img/BF_Batman.png"), 0, 480, 57.53, 100, 7, 0.15, 7, true, false, 3);
+        new Animation(AM.getAsset("./img/BF_Batman.png"), 0, 480, 57.53, 100, 7, 0.15, 7, true, false, 2.5);
     this.throwAnimation =
-        new Animation(AM.getAsset("./img/BF_Batman.png"), 960, 1476, 75, 90, 3, 0.075, 3, false, false, 3);
+        new Animation(AM.getAsset("./img/BF_Batman.png"), 960, 1476, 75, 90, 3, 0.075, 3, false, false, 2.5);
     this.throwSound = new Audio("throw_sound.wav");
     this.speed = 200;
     this.throwing = false;
@@ -226,7 +226,7 @@ Batman.prototype.draw = function() {  // only put draw stuff in here
 
 function Baterang(game) {
     this.Animation =
-        new Animation(AM.getAsset("./img/BF_Batman.png"), 1210, 1494, 22, 22, 15, 0.02, 15, true, true, 3);
+        new Animation(AM.getAsset("./img/BF_Batman.png"), 1210, 1494, 22, 22, 15, 0.02, 15, true, true, 2.5);
     this.speed = 1100;
     this.x = batX + 150;
     this.y = batY + 80;
